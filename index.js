@@ -3,7 +3,6 @@ const axios = require("axios");
 require("dotenv").config();
 let apiKEY = process.env.apiKEY;
 const token = process.env.token;
-
 const my_fun = async (city) => {
   let api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKEY}`;
   try {
