@@ -41,7 +41,7 @@ const mainFunc = () => {
           flag = false;
         }
       });
-    }, 36000000);
+    }, 3600000);
   });
 
   bot.onText(/\/stop/, (message) => {
