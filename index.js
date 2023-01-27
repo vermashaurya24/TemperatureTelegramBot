@@ -3,20 +3,16 @@ const axios = require("axios");
 require("dotenv").config();
 let apiKEY = process.env.apiKEY;
 const token = process.env.token;
-// let apiKEY = "8cca9e3b6164034830268229558768d7";
-// const token = "5839134388:AAF3uRnD3jJBDmjwrwl4RJ2A2dy4oat2R8U";
-// console.log(apiKEY + " " + token);
 
 const my_fun = async (city) => {
   let api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKEY}`;
   try {
     let res = await axios.get(api);
-    // console.log(res.data);
     return `Temperature in ${city} is : ${
       Math.round(res.data.main.temp) - 273
     }°C`;
   } catch (err) {
-    return "City does not exist. Try again. . .";
+    return "City does not exist. Pleas enter a valid city.";
   }
 };
 
@@ -25,7 +21,13 @@ const mainFunc = () => {
   let flag = false;
   const bot = new TelegramBot(token, { polling: true });
 
-  bot.onText(/\/start (.+)/, (msg, match) => {
+  bot.onText(/\/start/, (msg, match) => {
+    let text =
+      "Welcome to the Weather bot.\nThese are the commands supported:\n/weather <cityName>: returns the temperature of that city every hour\n/stop: stops this service";
+    bot.sendMessage(msg.chat.id, text);
+  });
+
+  bot.onText(/\/weather (.+)/, (msg, match) => {
     if (flag) return;
     flag = true;
     const chatId = msg.chat.id;
@@ -34,7 +36,7 @@ const mainFunc = () => {
     timer = setInterval(() => {
       resp.then((data) => {
         bot.sendMessage(chatId, data);
-        if (data === "City does not exist. Try again. . .") {
+        if (data === "City does not exist. Pleas enter a valid city.") {
           clearInterval(timer);
           flag = false;
         }
