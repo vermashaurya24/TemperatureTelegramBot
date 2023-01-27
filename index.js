@@ -40,7 +40,7 @@ const mainFunc = () => {
           flag = false;
         }
       });
-    }, 3600000);
+    }, 10000);
   });
 
   bot.onText(/\/stop/, (message) => {
