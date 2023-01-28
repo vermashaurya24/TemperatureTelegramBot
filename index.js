@@ -11,7 +11,7 @@ const my_fun = async (city) => {
       Math.round(res.data.main.temp) - 273
     }°C`;
   } catch (err) {
-    return "City does not exist. Pleas enter a valid city.";
+    return "City does not exist. Please enter a valid city.";
   }
 };
 
@@ -35,12 +35,12 @@ const mainFunc = () => {
     timer = setInterval(() => {
       resp.then((data) => {
         bot.sendMessage(chatId, data);
-        if (data === "City does not exist. Pleas enter a valid city.") {
+        if (data === "City does not exist. Please enter a valid city.") {
           clearInterval(timer);
           flag = false;
         }
       });
-    }, 10000);
+    }, 2000);
   });
 
   bot.onText(/\/stop/, (message) => {
